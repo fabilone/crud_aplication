@@ -11,7 +11,6 @@ app.use(flash());
 //Routes de acesso
 app.get("/", function(req, res){
   res.render('index');
-
 });
 
 //Template Engine
@@ -22,9 +21,7 @@ app.use('/css', express.static('css'));
 app.use('/js', express.static('js'));
 app.use('/img', express.static('img'));
 
-/*app.get('/', function(req, res){
-  res.sendFile(__dirname+"/src/index.js");
-});*/
+//Rotas CRUD
 
 var port = 3000;
 app.listen(port);
