@@ -10,7 +10,7 @@ app.use(flash());
 
 //Routes de acesso
 app.get("/", function(req, res){
-  res.render('index');
+  res.render('index', context);
 });
 
 //Template Engine
@@ -20,6 +20,11 @@ app.use(express.static(__dirname));
 app.use('/css', express.static('css'));
 app.use('/js', express.static('js'));
 app.use('/img', express.static('img'));
+
+var context = {
+  menu: "<h6>Eu sou o menu</h6>",
+  rodape: "<p>Todos os direitos reservados</p>"
+};
 
 //Rotas CRUD
 
