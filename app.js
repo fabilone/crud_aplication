@@ -5,6 +5,16 @@ var mysql = require('mysql');
 var handlebars = require('express-handlebars');
 var urlencodeParser = bodyParser.urlencoded({extended: false});
 
+var pool = mysql.createPool({
+    
+  host: process.env.HOST || 'localhost',
+  user: process.env.USER || 'usuario_teste',
+  password: process.env.PASS || '5JUFBGHirkXbzZNw',
+  port: process.env.ACCSS || 3306,
+  database: "bd_rose_life" 
+
+});
+
 const flash = require("connect-flash");
 app.use(flash());
 
@@ -18,7 +28,14 @@ app.get("/", function(req, res){
 
 app.get("/create", function(req, res){
   nav_bar = { mop1: "", mop2: "active", mop3:"", mop4: ""};
-  res.render('create-aplication', nav_bar);
+  pool.query("select * from crud_linguagem ORDER BY name", function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{
+      res.render('create-aplication', {nav_bar, linguagem: results});
+    }
+
+  });
+  
 });
 
 app.get("/list", function(req, res){
@@ -53,6 +70,17 @@ app.post("/search-aplication", function(req, res){
 app.post("/info", function(req, res){
   nav_bar = { mop1: "", mop2: "active", mop3:"", mop4: ""};
   res.render('detail', nav_bar);
+});
+
+//Cadastrar nova aplicação
+app.post("/register-aplication", urlencodeParser, function(req, res){
+  console.log(req.body.nameapp);
+  console.log(req.body.urlapp);
+  console.log(req.body.descricaoapp);
+  console.log(req.body.linguagemapp);
+  console.log(req.body.imgapp);
+  res.redirect("/");
+
 });
 
 
