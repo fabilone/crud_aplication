@@ -14,3 +14,4 @@ npm i @popperjs/core<br>
 npm install sweetalert<br>
 npm install --save express-session<br>
 npm install --save connect-flash<br>
+npm install --save multer<br>
