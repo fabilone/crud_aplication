@@ -18,9 +18,11 @@
         <title>CRUD Aplication</title>
     </head>
     <body>
-        {{{menu}}}
-        {{{body}}}
-        {{{rodape}}}
+        {{> menu}}
+        <div class="container-fluid container-md">
+            {{{body}}}
+        </div>
+        {{> footer}}
         
         <script src='/js/_app.js'></script>
 

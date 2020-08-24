@@ -10,7 +10,5 @@ function _App(){
     );
 
 }
-
-export default _App;*/
-
 document.write("<h5>Esse é um teste de arquivo js</h5>");
+export default _App;*/

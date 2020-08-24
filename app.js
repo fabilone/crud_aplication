@@ -22,8 +22,8 @@ app.use('/js', express.static('js'));
 app.use('/img', express.static('img'));
 
 var context = {
-  menu: "<h6>Eu sou o menu</h6>",
-  rodape: "<p>Todos os direitos reservados</p>"
+  texto: "<h6>Olá, bem-vido ao nosso sistema de cadastro</h6>",
+  texto_rodape: "<p>Todos os direitos reservados</p>"
 };
 
 //Rotas CRUD
