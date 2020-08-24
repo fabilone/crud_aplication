@@ -26,6 +26,11 @@ app.get("/list", function(req, res){
   res.render('read-aplication', nav_bar);
 });
 
+app.get("/list-linguagem", function(req, res){
+  nav_bar = { mop1: "", mop2: "", mop3:"active", mop4: ""};
+  res.render('read-aplication-linguagem', nav_bar);
+});
+
 //Template Engine
 app.engine("handlebars", handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
