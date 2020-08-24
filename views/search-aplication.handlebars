@@ -1,6 +1,6 @@
-<div>
+<div class="div_body_content">
     <hr>
-    <h5><i class="fas fa-angle-right"></i>&nbsp;Resultado da busca</h5>
+    <h5><i class="fas fa-angle-right"></i>&nbsp;<i class="fas fa-search"></i>&nbsp;Resultado da busca</h5>
 
     <div class="alert alert-warning" role="alert">
         Não foram encontrados resultados para a busca digitada!
@@ -8,8 +8,10 @@
 
     <div class="list-group">
         <a href="#" class="list-group-item list-group-item-action">Aplicações encontradas no sistema:</a>
-        <a href="#" class="list-group-item list-group-item-action list-group-item-info">Nome da Aplicação | Linguagem: #nome da linguagem</a>
-        <a href="#" class="list-group-item list-group-item-action list-group-item-info">Nome da Aplicação | Linguagem: #nome da linguagem</a>
+        <form name="search-form" action="/info" method="POST">
+            <a href="#" onClick="document.forms['search-form'].submit();" class="list-group-item list-group-item-action list-group-item-info">Nome da Aplicação | Linguagem: #nome da linguagem</a>
+        </form>
+        
     </div>
 
 </div>

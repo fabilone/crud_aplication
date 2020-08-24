@@ -50,6 +50,11 @@ app.post("/search-aplication", function(req, res){
   res.render('search-aplication', nav_bar);
 });
 
+app.post("/info", function(req, res){
+  nav_bar = { mop1: "", mop2: "active", mop3:"", mop4: ""};
+  res.render('detail', nav_bar);
+});
+
 
 var port = 3000;
 app.listen(port);
