@@ -8,13 +8,17 @@ var urlencodeParser = bodyParser.urlencoded({extended: false});
 const flash = require("connect-flash");
 app.use(flash());
 
+var nav_bar = { mop1: "active", mop2: "", mop3:"", mop4: ""};
+
 //Routes de acesso
 app.get("/", function(req, res){
-  res.render('index', context);
+  nav_bar = { mop1: "active", mop2: "", mop3:"", mop4: ""};
+  res.render('index', {context, nav_bar});
 });
 
 app.get("/create", function(req, res){
-  res.render('create-aplication');
+  nav_bar = { mop1: "", mop2: "active", mop3:"", mop4: ""};
+  res.render('create-aplication', nav_bar);
 });
 
 //Template Engine
