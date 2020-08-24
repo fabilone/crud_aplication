@@ -13,6 +13,10 @@ app.get("/", function(req, res){
   res.render('index', context);
 });
 
+app.get("/create", function(req, res){
+  res.render('create-aplication');
+});
+
 //Template Engine
 app.engine("handlebars", handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -27,6 +31,7 @@ var context = {
 };
 
 //Rotas CRUD
+
 
 var port = 3000;
 app.listen(port);
