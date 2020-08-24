@@ -7,47 +7,50 @@
         <form class="needs-validation" novalidate>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                <label for="validationTooltip01">First name</label>
-                <input type="text" class="form-control" id="validationTooltip01" value="" required="">
+                <label for="validationTooltip01">Nome da aplicação</label>
+                <input type="text" class="form-control" id="validationTooltip01" value="" required>
                 <div class="valid-tooltip">
-                    Looks good!
+                    Muito bem!
                 </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                <label for="validationTooltip02">Last name</label>
-                <input type="text" class="form-control" id="validationTooltip02" value="" required="">
+                <label for="validationTooltip02">URL</label>
+                <input type="text" class="form-control" id="validationTooltip02" value="" required>
                 <div class="valid-tooltip">
-                    Looks good!
+                    Muito bem!
                 </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                <label for="validationTooltip03">City</label>
-                <input type="text" class="form-control" id="validationTooltip03" required="">
-                <div class="invalid-tooltip">
-                    Please provide a valid city.
+                <label for="validationTooltip03">Descrição</label>
+                <input type="text" class="form-control" id="validationTooltip03" required>
+                <div class="valid-tooltip">
+                    Muito bem!
                 </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
                 </div>
                 <div class="col-md-3 mb-3">
-                <label for="validationTooltip04">State</label>
-                <select class="custom-select" id="validationTooltip04" required="">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option>...</option>
-                </select>
-                <div class="invalid-tooltip">
-                    Please select a valid state.
-                </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                <label for="validationTooltip05">Zip</label>
-                <input type="text" class="form-control" id="validationTooltip05" required="">
-                <div class="invalid-tooltip">
-                    Please provide a valid zip.
-                </div>
+                    <label for="validationTooltip04">Linguaguem</label>
+                    <select class="custom-select" id="validationTooltip04" required>
+                        <option selected="" disabled="" value="">Escolha</option>
+                        <option>Java</option>
+                    </select>
+                    <div class="invalid-tooltip">
+                        Please select a valid state.
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-info" type="submit">Submit form</button>
+            <button class="btn btn-info" type="submit">Cadastrar</button>
+            <button class="btn btn-info" type="submit">Cancelar</button>
         </form>
 
     </div>
