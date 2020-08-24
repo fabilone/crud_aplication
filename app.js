@@ -45,6 +45,10 @@ var context = {
 };
 
 //Rotas CRUD
+app.post("/search-aplication", function(req, res){
+  nav_bar = { mop1: "", mop2: "", mop3:"active", mop4: ""};
+  res.render('search-aplication', nav_bar);
+});
 
 
 var port = 3000;
