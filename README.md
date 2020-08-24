@@ -1,16 +1,16 @@
 Projeto Node.JS CRUD cadastro de aplicações
 
-comandos utilizados
-npm install --save express
-npm install -D nodemon
-npm install --save mysql
-npm install --save body-parser
-npm install --save express-handlebars
-npm install --save os
-npm install --save cluster
-npm install --save check-node-version
-npm install --save react-router-dom
-npm i @popperjs/core
-npm install sweetalert
-npm install --save express-session
-npm install --save connect-flash
+comandos utilizados<br>
+npm install --save express<br>
+npm install -D nodemon<br>
+npm install --save mysql<br>
+npm install --save body-parser<br>
+npm install --save express-handlebars<br>
+npm install --save os<br>
+npm install --save cluster<br>
+npm install --save check-node-version<br>
+npm install --save react-router-dom<br>
+npm i @popperjs/core<br>
+npm install sweetalert<br>
+npm install --save express-session<br>
+npm install --save connect-flash<br>
