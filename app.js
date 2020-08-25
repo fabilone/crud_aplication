@@ -4,7 +4,39 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var handlebars = require('express-handlebars');
 var urlencodeParser = bodyParser.urlencoded({extended: false});
+const multer = require("multer");
+const path = require("path");
 
+app.use(function(req, res, next){
+  res.locals.user = "AVATAR";
+  next();
+});
+
+//Configurações de Arquivos
+const storage = multer.diskStorage({
+  
+	destination: function(req, file, cb){
+		cb(null, "uploads/");
+	},
+	filename: function(req, file, cb){
+
+    pool.query("select * from crud_linguagem", function(err, results){
+      if(err) res.sendStatus(500).send(err);
+      else{
+        var size_user = results.length;
+        var _id_user = results[size_user-1].codigo;
+        console.log(_id_user);
+        cb(null, "file_id-" + _id_user + path.extname(file.originalname));
+      }
+  
+    });
+		
+	}
+});
+
+const upload = multer({storage});
+
+//Configurações da Base de Dados
 var pool = mysql.createPool({
     
   host: process.env.HOST || 'localhost',
@@ -73,12 +105,12 @@ app.post("/info", function(req, res){
 });
 
 //Cadastrar nova aplicação
-app.post("/register-aplication", urlencodeParser, function(req, res){
+app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, function(req, res){
   console.log(req.body.nameapp);
   console.log(req.body.urlapp);
   console.log(req.body.descricaoapp);
   console.log(req.body.linguagemapp);
-  console.log(req.body.imgapp);
+  //console.log(req.body.imgapp);
   res.redirect("/");
 
 });
