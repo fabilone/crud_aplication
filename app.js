@@ -20,13 +20,24 @@ const storage = multer.diskStorage({
 	},
 	filename: function(req, file, cb){
 
-    pool.query("select * from crud_linguagem", function(err, results){
+    pool.query("select * from crud_controlupload where codigo=1", function(err, results){
       if(err) res.sendStatus(500).send(err);
       else{
-        var size_user = results.length;
-        var _id_user = results[size_user-1].codigo;
+        var size_user = results[0].last_upload;
+        console.log(size_user);
+        var _id_user = size_user+1;
         console.log(_id_user);
-        cb(null, "file_id-" + _id_user + path.extname(file.originalname));
+        var caminho_user = "file_id-" + _id_user + path.extname(file.originalname);
+        console.log(caminho_user);
+
+        pool.query("update crud_controlupload set last_upload=?, last_path_img=? ", [_id_user, caminho_user], function(err, retur){
+          if(err) res.sendStatus(500).send(err);
+          else console.log("Registro de imagem feito com sucesso!");
+          
+        });
+        cb(null, caminho_user);
+
+          
       }
   
     });
@@ -110,8 +121,13 @@ app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, funct
   console.log(req.body.urlapp);
   console.log(req.body.descricaoapp);
   console.log(req.body.linguagemapp);
-  //console.log(req.body.imgapp);
-  res.redirect("/");
+
+  pool.query("insert into crud_app values(?,?,?,?,?,?)", [null, req.body.nameapp, req.body.urlapp, req.body.linguagemapp, req.body.descricaoapp, null], function(err, results){
+    if(err) res.sendStatus(500).send(err);
+        else{
+          res.redirect("/");
+        } 
+  });
 
 });
 
