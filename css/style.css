@@ -1,3 +1,13 @@
 .div_body_content{
     min-height: 35rem;
 }
+.none-link{
+    text-decoration: none;
+    color:#000;
+
+}
+/*
+.none-link:hover{
+    color: #89A7ADFF;
+}
+*/
