@@ -31,7 +31,14 @@
               </form>
             </li>
             <li class="page-item"><a class="page-link" href="#"><i class="fas fa-edit"></i>&nbsp;Editar</a></li>
-            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-trash-alt"></i>&nbsp;Excluir</a></li>
+            <li class="page-item">
+              <form action="/info-delete-app" name="delete-form{{codigo}}" method="POST">
+                <input type="hidden" name="codigo" value="{{codigo}}">
+                <input type="hidden" name="path_file" value="{{path_img}}">
+                <input type="hidden" name="language" value="{{app_language}}">
+                <a class="page-link" href="#" onClick="document.forms['delete-form{{codigo}}'].submit();"><i class="fas fa-trash-alt"></i>&nbsp;Excluir</a>
+              </form>
+            </li>
           </ul>
         </nav>
       </td>

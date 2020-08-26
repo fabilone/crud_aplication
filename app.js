@@ -6,6 +6,7 @@ var handlebars = require('express-handlebars');
 var urlencodeParser = bodyParser.urlencoded({extended: false});
 const multer = require("multer");
 const path = require("path");
+const fs = require('fs');
 
 app.use(function(req, res, next){
   res.locals.user = "AVATAR";
@@ -70,10 +71,15 @@ app.use('/uploads', express.static('uploads'));
 
 //Função para atualizar a liguagem
 function uplinguagem(name_lg){
-  pool.query("UPDATE crud_linguagem SET status = 'true' WHERE crud_linguagem.name = ?", [name_lg], function(err, results){
+  pool.query("UPDATE crud_linguagem SET status = status+1 WHERE crud_linguagem.name = ?", [name_lg], function(err, results){
     if(err) results.sendStatus(500).send(err);
     else{ console.log("Linguagem atualizada com sucesso"); }
-
+  });
+}
+function downlinguagem(name_lg){
+  pool.query("UPDATE crud_linguagem SET status = status-1 WHERE crud_linguagem.name = ?", [name_lg], function(err, results){
+    if(err) results.sendStatus(500).send(err);
+    else{ console.log("Linguagem atualizada com sucesso"); }
   });
 }
 
@@ -87,11 +93,20 @@ function updateMenu(ativo){
   return nav_bar; 
 }
 
+//Função para deletar arquivos
+function deleteFile(file_name){
+  var file = __dirname+'/uploads/'+file_name;
+  fs.unlink(file, (err) => {
+    if (err) throw err;
+  console.log('Arquivo deletado com sucesso!');
+  });
+}
+
 
 //Routes de acesso
 //Home
 app.get("/", function(req, res){
-  pool.query("SELECT * FROM crud_linguagem WHERE status = 'true' ORDER BY name", function(err, results){
+  pool.query("SELECT * FROM crud_linguagem WHERE status > 0 ORDER BY name", function(err, results){
     if(err) res.sendStatus(500).send(err);
     else{
       var msg_erro = [];
@@ -182,17 +197,30 @@ app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, funct
 
 });
 
+//Listagem por linguagem
 app.post("/select-list-linguagem", urlencodeParser, function(req, res){
-
   pool.query("SELECT * FROM crud_app WHERE  app_language = ? ORDER BY name", [req.body.selectlinguagem], function(err, results){
     if(err) res.sendStatus(500).send(err);
     else{
       var nav_bar = updateMenu(2);
       res.render('read-aplication-linguagem', {nav_bar, lg_name: req.body.selectlinguagem, linguagem: results});
     }
-
   });
+});
 
+//Deletar aplicação
+app.post("/info-delete-app", urlencodeParser, function(req, res){
+  res.render('delete-control', {codigo: req.body.codigo, file: req.body.path_file, language: req.body.language});
+});
+app.post("/delete-app", urlencodeParser, function(req, res){
+  pool.query("DELETE FROM crud_app WHERE crud_app.codigo = ?;", [req.body.codigo], function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{ 
+      deleteFile(req.body.path_file);
+      downlinguagem(req.body.app_language);
+      res.render('confirm-delete-control');
+     }
+  });
 });
 
 var port = 3000;

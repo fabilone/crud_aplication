@@ -1,0 +1,23 @@
+<div class="div_body_content">
+
+    <form name="send-delete-form" action="delete-app" method="POST">
+        <input type="hidden" name="codigo" value="{{codigo}}">
+        <input type="hidden" name="path_file" value="{{file}}">
+        <input type="hidden" name="app_language" value="{{language}}">
+    </form>
+
+    <script>
+        swal({
+            title: "Aviso!",
+            text: "Deseja realmente excluir a Aplicação?",
+            icon: "warning",
+            dangerMode: true,
+            buttons: ["Cancelar", "Excluir"]
+        })
+        .then((willDelete) => {
+            if (willDelete) { document.forms['send-delete-form'].submit(); }
+            else { window.location.href = "/list"; }
+        });
+    </script>
+
+</div>
