@@ -1,0 +1,16 @@
+<div class="div_body_content">
+
+    <script>
+        swal({
+            title: "Sucesso!",
+            text: "Aplicação Cadastrada. O que você deseja fazer?",
+            icon: "success",
+            buttons: ["Cancelar", "Novo Cadastro"]
+        })
+        .then((willDelete) => {
+            if (willDelete) { window.location.href = "/create"; }
+            else { window.location.href = "/"; }
+        });
+    </script>
+
+</div>

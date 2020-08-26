@@ -92,6 +92,12 @@ app.get("/list-linguagem", function(req, res){
   res.render('read-aplication-linguagem', nav_bar);
 });
 
+app.get("/end-create-aplication", function(req, res){
+  res.render("error-control");
+
+});
+
+
 //Template Engine
 app.engine("handlebars", handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -137,7 +143,7 @@ app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, funct
         if(er) res.sendStatus(500).send(er);
         else{
           console.log("Atualização do cadastro do App feito com sucesso!");
-          res.redirect("/create");
+          res.redirect("/end-create-aplication");
         }
       }); 
       
