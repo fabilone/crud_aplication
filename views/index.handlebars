@@ -4,36 +4,29 @@
     <h5>Gerenciamento de Cadastro de Aplicações</h5>
     <br>
     <h6>Aplicações Cadastradas no Sistema:</h6>
-
+    
+    {{#msg}}
     <div class="alert alert-info" role="alert">
         Ainda não existe nenhuma aplicação cadastrada no sistema.
     </div>
+    {{/msg}}
 
     <div class="row">
-        <div class="col-sm-6">
+        {{#linguagem}}
+        <div class="col-sm-6 mb-2">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Nome da Linguagem</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <div class="card-body" style="min-height: 13rem;">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{description}}</p>
 
-                    <form action="/list-linguagem" method="GET">
+                    <form action="/select-list-linguagem" method="POST">
+                        <input type="hidden" name="selectlinguagem" value="{{name}}">
                         <button type="submit" class="btn btn-outline-info">Listar Aplicações</button>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Nome da Linguagem</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in  to additional content.</p>
-
-                    <form action="/list-linguagem" method="GET">
-                        <button type="submit" class="btn btn-outline-info">Listar Aplicações</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        {{/linguagem}}
     </div>
 
     <hr>

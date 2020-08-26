@@ -65,7 +65,18 @@ var nav_bar = { mop1: "active", mop2: "", mop3:"", mop4: ""};
 //Routes de acesso
 app.get("/", function(req, res){
   nav_bar = { mop1: "active", mop2: "", mop3:"", mop4: ""};
-  res.render('index', {context, nav_bar});
+  
+
+  pool.query("SELECT * FROM crud_linguagem WHERE status = 'true' ORDER BY name", function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{
+      var msg_erro = [];
+      if(results.length == 0){ msg_erro[0] = "Ainda não existe nenhuma aplicação cadastrada no sistema."; }
+
+      res.render('index', {context, nav_bar, msg: msg_erro, linguagem: results});
+    }
+
+  });
 });
 
 app.get("/create", function(req, res){
@@ -84,7 +95,14 @@ app.get("/create", function(req, res){
 
 app.get("/list", function(req, res){
   nav_bar = { mop1: "", mop2: "", mop3:"active", mop4: ""};
-  res.render('read-aplication', nav_bar);
+
+  pool.query("SELECT * FROM crud_app ORDER BY name, app_language", function(err, results){
+    if(err){ res.sendStatus(500).send(err); }
+    else { res.render('read-aplication', {nav_bar, aplications: results}); }
+
+  });
+
+  
 });
 
 app.get("/list-linguagem", function(req, res){
@@ -163,6 +181,20 @@ app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, funct
 
 });
 
+app.post("/select-list-linguagem", urlencodeParser, function(req, res){
+
+  nav_bar = { mop1: "", mop2: "", mop3:"active", mop4: ""};
+
+  pool.query("SELECT * FROM crud_app WHERE  app_language = ? ORDER BY name", [req.body.selectlinguagem], function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{
+
+      res.render('read-aplication-linguagem', {nav_bar, lg_name: req.body.selectlinguagem, linguagem: results});
+    }
+
+  });
+
+});
 
 var port = 3000;
 app.listen(port);

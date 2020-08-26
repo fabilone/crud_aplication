@@ -13,27 +13,15 @@
     </tr>
   </thead>
   <tbody>
+    {{#aplications}}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row">{{codigo}}</th>
+      <td>{{name}}</td>
+      <td>{{URL}}</td>
+      <td>{{app_language}}</td>
       <td>Editar Exluir</td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Editar Exluir</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Editar Exluir</td>
-    </tr>
+    {{/aplications}}
   </tbody>
 </table>
 
