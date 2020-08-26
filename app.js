@@ -36,7 +36,6 @@ const storage = multer.diskStorage({
           
         });
         cb(null, caminho_user);
-
           
       }
   
@@ -72,7 +71,7 @@ app.get("/", function(req, res){
 app.get("/create", function(req, res){
   nav_bar = { mop1: "", mop2: "active", mop3:"", mop4: ""}; 
 
-  pool.query("select * from crud_linguagem ORDER BY name", function(err, results){
+  pool.query("SELECT * FROM crud_linguagem ORDER BY name", function(err, results){
     if(err) res.sendStatus(500).send(err);
     else{
 
@@ -118,57 +117,33 @@ app.post("/info", function(req, res){
 });
 
 //Cadastrar nova aplicação
-function updateImg(caminho, user){
-  console.log("caminho da imagem: ", caminho);
-  console.log("Id Usuário: ", user);
-  pool.query("update crud_app set path_img=? where crud_app last_update=?", [caminho, user], function(err, results){
-    if(err) results.sendStatus(500).send(err);
-    else{
-      console.log("Atualização do cadastro do App feito com sucesso!");
-    }
-  });
-}
-
 app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, function(req, res){
-  console.log(req.body.nameapp);
-  console.log(req.body.urlapp);
-  console.log(req.body.descricaoapp);
-  console.log(req.body.linguagemapp);
 
-
-  pool.query("insert into crud_app values(?,?,?,?,?,?)", [null, req.body.nameapp, req.body.urlapp, req.body.linguagemapp, req.body.descricaoapp, null], function(err, results){
+  pool.query("INSERT INTO crud_app VALUES(?,?,?,?,?,?)", [null, req.body.nameapp, req.body.urlapp, req.body.linguagemapp, req.body.descricaoapp, null], function(err, results){
     if(err) res.sendStatus(500).send(err);
         else{
           console.log("Cadastro App feito com sucesso!");
         } 
   });
 
-  pool.query("select * from crud_controlupload where codigo=1", function(err, results){
+  pool.query("SELECT * FROM crud_controlupload WHERE codigo=1", function(err, results){
     if(err) res.sendStatus(500).send(err);
     else{
+
       var path_img = results[0].last_path_img;
       var code_user = results[0].last_upload;
-      //updateImg(path_img, code_user);
-      res.redirect("/updateimg", {path_img, code_user});
+
+      pool.query("UPDATE crud_app SET path_img =? WHERE crud_app.codigo =?;",[path_img, code_user], function(er, result){
+        if(er) res.sendStatus(500).send(er);
+        else{
+          console.log("Atualização do cadastro do App feito com sucesso!");
+          res.redirect("/create");
+        }
+      }); 
+      
     }
 
   });
-
-  //res.redirect("/updateimg");
-
-});
-
-app.get("/updateimg", urlencodeParser, function(req, res){
-  //updateImg(path_img, code_user);
-  pool.query("UPDATE crud_app SET path_img = 'file_id-111.jpg' WHERE crud_app.codigo = 1;", function(er, result){
-    if(er) res.sendStatus(500).send(er);
-    else{
-      console.log("Atualização do cadastro do App feito com sucesso!");
-      console.log(req.body.path_img);
-      console.log(req.body.code_user);
-      res.redirect("/");
-    }
-  }); 
 
 });
 
