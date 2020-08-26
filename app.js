@@ -65,6 +65,7 @@ app.use(express.static(__dirname));
 app.use('/css', express.static('css'));
 app.use('/js', express.static('js'));
 app.use('/img', express.static('img'));
+app.use('/uploads', express.static('uploads'));
 
 
 //Função para atualizar a liguagem
@@ -145,7 +146,6 @@ app.post("/info", urlencodeParser, function(req, res){
     else{
       var nav_bar = updateMenu(1);
       res.render('detail', {nav_bar, infoApp: results});
-      console.log(results);
     }
   });  
 });
