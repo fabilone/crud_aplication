@@ -3,12 +3,14 @@
     <h5><i class="fas fa-angle-right"></i>&nbsp;<i class="fas fa-info-circle"></i>&nbsp;Detalhe da Aplicação:</h5>
     <br>
     <div class="card bg-light mb-3">
-        <div class="card-header">Nome da Aplicação</div>
+        {{#infoApp}}
+        <div class="card-header"><b>{{name}}</b></div>
         <div class="card-body">
             <h5 class="card-title">Descrição:</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text">{{description}}</p>
         </div>
-        <div class="card-footer bg-transparent border"><b>Linguagem:</b> nome da linguagem | <b>URL:</b><a class="alert-link" href="#"> Http://wwww.site.com.br</a></div>
-
+        <div class="card-footer bg-transparent border"><b>Linguagem:</b>  {{app_language}}  | <b>URL:</b> <a class="alert-link" href="{{URL}}">{{URL}}</a></div>
+        {{/infoApp}}
     </div>
+    <button class="btn btn-info" type="button" onClick="window.location='/list';" >Voltar</button>
 </div>

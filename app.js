@@ -112,6 +112,11 @@ app.get("/create", function(req, res){
   });  
 });
 
+//Confirmação cadastro
+app.get("/end-create-aplication", function(req, res){
+  res.render("error-control");
+});
+
 //Listar
 app.get("/list", function(req, res){
   pool.query("SELECT * FROM crud_app ORDER BY app_language, name", function(err, results){
@@ -120,15 +125,12 @@ app.get("/list", function(req, res){
   });  
 });
 
+//Listar por linguagem
 app.get("/list-linguagem", function(req, res){
   var nav_bar = updateMenu(2);
   res.render('read-aplication-linguagem', nav_bar);
 });
 
-app.get("/end-create-aplication", function(req, res){
-  res.render("error-control");
-
-});
 
 
 //Rotas CRUD
@@ -137,9 +139,15 @@ app.post("/search-aplication", function(req, res){
   res.render('search-aplication', nav_bar);
 });
 
-app.post("/info", function(req, res){
-  var nav_bar = updateMenu(1);
-  res.render('detail', nav_bar);
+app.post("/info", urlencodeParser, function(req, res){
+  pool.query("SELECT * FROM crud_app WHERE codigo = ?", [req.body.codigo], function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{
+      var nav_bar = updateMenu(1);
+      res.render('detail', {nav_bar, infoApp: results});
+      console.log(results);
+    }
+  });  
 });
 
 //Cadastrar nova aplicação

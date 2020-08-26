@@ -19,7 +19,20 @@
       <td>{{name}}</td>
       <td>{{URL}}</td>
       <td>{{app_language}}</td>
-      <td>Detalhar Editar Exluir</td>
+      <td>
+        <nav aria-label="...">
+          <ul class="pagination pagination-sm">
+            <li class="page-item">
+              <form name="info-form{{codigo}}" action="/info" method="POST">
+                <input type="hidden" name="codigo" value="{{codigo}}">
+                <a class="page-link" href="#" onClick="document.forms['info-form{{codigo}}'].submit();" tabindex="-1"><i class="fas fa-info"></i>&nbsp;Detalhar</a>
+              </form>
+            </li>
+            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-edit"></i>&nbsp;Editar</a></li>
+            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-trash-alt"></i>&nbsp;Excluir</a></li>
+          </ul>
+        </nav>
+      </td>
     </tr>
     {{/aplications}}
   </tbody>
