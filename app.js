@@ -97,6 +97,15 @@ app.get("/end-create-aplication", function(req, res){
 
 });
 
+//Função para atualizar a liguagem
+function uplinguagem(name_lg){
+  pool.query("UPDATE crud_linguagem SET status = 'true' WHERE crud_linguagem.name = ?", [name_lg], function(err, results){
+    if(err) results.sendStatus(500).send(err);
+    else{ console.log("Linguagem atualizada com sucesso"); }
+
+  });
+}
+
 
 //Template Engine
 app.engine("handlebars", handlebars({defaultLayout: 'main'}));
@@ -129,6 +138,7 @@ app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, funct
     if(err) res.sendStatus(500).send(err);
         else{
           console.log("Cadastro App feito com sucesso!");
+          uplinguagem(req.body.linguagemapp);
         } 
   });
 
