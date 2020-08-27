@@ -8,10 +8,6 @@ const multer = require("multer");
 const path = require("path");
 const fs = require('fs');
 
-app.use(function(req, res, next){
-  res.locals.user = "AVATAR";
-  next();
-});
 
 //Configurações da Base de Dados
 var pool = mysql.createPool({
@@ -34,14 +30,10 @@ const storage = multer.diskStorage({
       if(err) res.sendStatus(500).send(err);
       else{
         var size_user = results[0].last_upload;
-        console.log(size_user);
         var _id_user = size_user+1;
-        console.log(_id_user);
         var caminho_user = "file_id-" + _id_user + path.extname(file.originalname);
-        console.log(caminho_user);
         pool.query("update crud_controlupload set last_upload=?, last_path_img=? ", [_id_user, caminho_user], function(err, retur){
-          if(err) res.sendStatus(500).send(err);
-          else console.log("Registro de imagem feito com sucesso!");          
+          if(err) res.sendStatus(500).send(err);         
         });
         cb(null, caminho_user);          
       }  
@@ -97,7 +89,6 @@ function deleteFile(file_name){
   var file = __dirname+'/uploads/'+file_name;
   fs.unlink(file, (err) => {
     if (err) throw err;
-  console.log('Arquivo deletado com sucesso!');
   });
 }
 
@@ -135,7 +126,12 @@ app.get("/end-create-aplication", function(req, res){
 app.get("/list", function(req, res){
   pool.query("SELECT * FROM crud_app ORDER BY app_language, name", function(err, results){
     if(err){ res.sendStatus(500).send(err); }
-    else { var nav_bar = updateMenu(2); res.render('read-aplication', {nav_bar, aplications: results}); }
+    else { 
+      var nav_bar = updateMenu(2);
+      var info_list = [];
+      if(results.length == 0) info_list[0]= "Ainda não existe nenhuma aplicação cadastrada no sistema.";
+      res.render('read-aplication', {nav_bar, msg: info_list, aplications: results});
+    }
   });  
 });
 
@@ -159,11 +155,7 @@ app.post("/search-aplication", urlencodeParser, function(req, res){
       }
       res.render('search-aplication', {nav_bar, msg: msg_busca, resul_busca: results});
     }
-
   });
-
-  //var nav_bar = updateMenu(2);
-  //res.render('search-aplication', nav_bar);
 });
 
 //Detalhe da aplicação
@@ -181,10 +173,7 @@ app.post("/info", urlencodeParser, function(req, res){
 app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, function(req, res){
   pool.query("INSERT INTO crud_app VALUES(?,?,?,?,?,?)", [null, req.body.nameapp, req.body.urlapp, req.body.linguagemapp, req.body.descricaoapp, null], function(err, results){
     if(err) res.sendStatus(500).send(err);
-        else{
-          console.log("Cadastro App feito com sucesso!");
-          uplinguagem(req.body.linguagemapp);
-        } 
+        else{ uplinguagem(req.body.linguagemapp); } 
   });
   pool.query("SELECT * FROM crud_controlupload WHERE codigo=1", function(err, results){
     if(err) res.sendStatus(500).send(err);
