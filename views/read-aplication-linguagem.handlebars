@@ -16,8 +16,33 @@
     <tr>
       <th scope="row">{{codigo}}</th>
       <td>{{name}}</td>
-      <td>{{URL}}</td>
-      <td>Detalhar | Editar | Excluir</td>
+      <td><a href="{{URL}}" target="_black">{{URL}}</a></td>
+      <td>
+        <nav aria-label="...">
+          <ul class="pagination pagination-sm">
+            <li class="page-item">
+              <form name="info-form{{codigo}}" action="/info" method="POST">
+                <input type="hidden" name="codigo" value="{{codigo}}">
+                <a class="page-link" href="#" onClick="document.forms['info-form{{codigo}}'].submit();" tabindex="-1"><i class="fas fa-info"></i>&nbsp;Detalhar</a>
+              </form>
+            </li>
+            <li class="page-item">
+              <form action="/edite" name="edite-form{{codigo}}" method="POST">
+                <input type="hidden" name="codigo" value="{{codigo}}">
+              </form>
+              <a class="page-link" href="#" onClick="document.forms['edite-form{{codigo}}'].submit();"><i class="fas fa-edit"></i>&nbsp;Editar</a>
+            </li>
+            <li class="page-item">
+              <form action="/info-delete-app" name="delete-form{{codigo}}" method="POST">
+                <input type="hidden" name="codigo" value="{{codigo}}">
+                <input type="hidden" name="path_file" value="{{path_img}}">
+                <input type="hidden" name="language" value="{{app_language}}">
+                <a class="page-link" href="#" onClick="document.forms['delete-form{{codigo}}'].submit();"><i class="fas fa-trash-alt"></i>&nbsp;Excluir</a>
+              </form>
+            </li>
+          </ul>
+        </nav>
+      </td>
     </tr>
     {{/linguagem}}
   </tbody>

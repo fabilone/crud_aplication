@@ -2,15 +2,22 @@
     <hr>
     <h5><i class="fas fa-angle-right"></i>&nbsp;<i class="fas fa-info-circle"></i>&nbsp;Detalhe da Aplicação:</h5>
     <br>
+    {{#infoApp}}
     <div class="card bg-light mb-3">
-        {{#infoApp}}
         <div class="card-header"><img src="/uploads/{{path_img}}" style="max-height: 5rem;">&nbsp;&nbsp;<b>{{name}}</b></div>
         <div class="card-body">
             <h5 class="card-title">Descrição:</h5>
             <p class="card-text">{{description}}</p>
         </div>
         <div class="card-footer bg-transparent border"><b>Linguagem:</b>  {{app_language}}  | <b>URL:</b> <a class="alert-link" target="_blank" href="{{URL}}">{{URL}}</a></div>
-        {{/infoApp}}
     </div>
-    <button class="btn btn-info" type="button" onClick="window.location='/list';" >Voltar</button>
+    <div class="btn-group" role="group">
+    <button class="btn btn-light" type="button" onClick="window.location='/list';" >Voltar</button>
+    <form action="/edite" method="POST">
+        <input type="hidden" name="codigo" value="{{codigo}}">
+        <button class="btn btn-light" type="submit">Editar</button>
+    </form>
+    </div>
+    {{/infoApp}}
+    
 </div>

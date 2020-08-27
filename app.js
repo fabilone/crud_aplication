@@ -68,7 +68,7 @@ app.use('/img', express.static('img'));
 app.use('/uploads', express.static('uploads'));
 
 
-//Função para atualizar a liguagem
+//Função para atualizar a linguagem
 function uplinguagem(name_lg){
   pool.query("UPDATE crud_linguagem SET status = status+1 WHERE crud_linguagem.name = ?", [name_lg], function(err, results){
     if(err) results.sendStatus(500).send(err);
@@ -145,7 +145,7 @@ app.get("/list-linguagem", function(req, res){
   res.render('read-aplication-linguagem', nav_bar);
 });
 
-//Rotas CRUD
+//Pesquisar
 app.post("/search-aplication", function(req, res){
   var nav_bar = updateMenu(2);
   res.render('search-aplication', nav_bar);
@@ -212,7 +212,7 @@ app.post("/delete-app", urlencodeParser, function(req, res){
   });
 });
 
-//Editar Aplicação
+//Atualizar Aplicação
 app.post("/edite", urlencodeParser, function(req, res){
   pool.query("SELECT * FROM crud_app WHERE crud_app.codigo = ?", [req.body.codigo], function(err, results){
     if(err) res.sendStatus(500).send(err);
@@ -235,9 +235,9 @@ app.post("/update-aplication", urlencodeParser, function(req, res){
       if(req.body.linguagemapp != req.body.lastlinguagemapp){
           uplinguagem(req.body.linguagemapp);
           downlinguagem(req.body.lastlinguagemapp);
-          res.redirect('/');
         }
-    } 
+    }
+    res.render('confirm-update');
   });
 });
 
