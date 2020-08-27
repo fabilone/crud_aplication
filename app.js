@@ -146,9 +146,24 @@ app.get("/list-linguagem", function(req, res){
 });
 
 //Pesquisar
-app.post("/search-aplication", function(req, res){
-  var nav_bar = updateMenu(2);
-  res.render('search-aplication', nav_bar);
+app.post("/search-aplication", urlencodeParser, function(req, res){
+  var busca = req.body.search;
+  var tag = '%'+busca+'%';
+  pool.query("SELECT * FROM crud_app WHERE name LIKE ? ORDER BY name;", [tag], function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{
+      var msg_busca = [];
+      var nav_bar = updateMenu(2); 
+      if(results.length == 0){ 
+        msg_busca[0] = "Não foram encontrados resultados para a busca digitada!";
+      }
+      res.render('search-aplication', {nav_bar, msg: msg_busca, resul_busca: results});
+    }
+
+  });
+
+  //var nav_bar = updateMenu(2);
+  //res.render('search-aplication', nav_bar);
 });
 
 //Detalhe da aplicação

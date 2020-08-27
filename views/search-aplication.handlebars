@@ -1,16 +1,21 @@
 <div class="div_body_content">
     <hr>
     <h5><i class="fas fa-angle-right"></i>&nbsp;<i class="fas fa-search"></i>&nbsp;Resultado da busca</h5>
-
+    
+    {{#msg}}
     <div class="alert alert-warning" role="alert">
         Não foram encontrados resultados para a busca digitada!
     </div>
+    {{/msg}}
 
     <div class="list-group">
         <a href="#" class="list-group-item list-group-item-action">Aplicações encontradas no sistema:</a>
+        {{#resul_busca}}
         <form name="search-form" action="/info" method="POST">
-            <a href="#" onClick="document.forms['search-form'].submit();" class="list-group-item list-group-item-action list-group-item-info">Nome da Aplicação | Linguagem: #nome da linguagem</a>
+            <input type="hidden" name="codigo" value="{{codigo}}">
+            <a href="#" onClick="document.forms['search-form'].submit();" class="list-group-item list-group-item-action list-group-item-info"><b>Nome Aplicação:</b> {{name}} | <b>Linguagem:</b> {{app_language}}</a>
         </form>
+        {{/resul_busca}}
         
     </div>
 
