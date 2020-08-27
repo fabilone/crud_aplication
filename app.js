@@ -39,7 +39,6 @@ const storage = multer.diskStorage({
         console.log(_id_user);
         var caminho_user = "file_id-" + _id_user + path.extname(file.originalname);
         console.log(caminho_user);
-
         pool.query("update crud_controlupload set last_upload=?, last_path_img=? ", [_id_user, caminho_user], function(err, retur){
           if(err) res.sendStatus(500).send(err);
           else console.log("Registro de imagem feito com sucesso!");          
@@ -102,7 +101,6 @@ function deleteFile(file_name){
   });
 }
 
-
 //Routes de acesso
 //Home
 app.get("/", function(req, res){
@@ -147,14 +145,13 @@ app.get("/list-linguagem", function(req, res){
   res.render('read-aplication-linguagem', nav_bar);
 });
 
-
-
 //Rotas CRUD
 app.post("/search-aplication", function(req, res){
   var nav_bar = updateMenu(2);
   res.render('search-aplication', nav_bar);
 });
 
+//Detalhe da aplicação
 app.post("/info", urlencodeParser, function(req, res){
   pool.query("SELECT * FROM crud_app WHERE codigo = ?", [req.body.codigo], function(err, results){
     if(err) res.sendStatus(500).send(err);
@@ -167,7 +164,6 @@ app.post("/info", urlencodeParser, function(req, res){
 
 //Cadastrar nova aplicação
 app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, function(req, res){
-
   pool.query("INSERT INTO crud_app VALUES(?,?,?,?,?,?)", [null, req.body.nameapp, req.body.urlapp, req.body.linguagemapp, req.body.descricaoapp, null], function(err, results){
     if(err) res.sendStatus(500).send(err);
         else{
@@ -175,26 +171,19 @@ app.post("/register-aplication", upload.single('imgapp'), urlencodeParser, funct
           uplinguagem(req.body.linguagemapp);
         } 
   });
-
   pool.query("SELECT * FROM crud_controlupload WHERE codigo=1", function(err, results){
     if(err) res.sendStatus(500).send(err);
     else{
-
       var path_img = results[0].last_path_img;
       var code_user = results[0].last_upload;
-
       pool.query("UPDATE crud_app SET path_img =? WHERE crud_app.codigo =?;",[path_img, code_user], function(er, result){
         if(er) res.sendStatus(500).send(er);
         else{
-          console.log("Atualização do cadastro do App feito com sucesso!");
           res.redirect("/end-create-aplication");
         }
-      }); 
-      
+      });      
     }
-
   });
-
 });
 
 //Listagem por linguagem
@@ -220,6 +209,35 @@ app.post("/delete-app", urlencodeParser, function(req, res){
       downlinguagem(req.body.app_language);
       res.render('confirm-delete-control');
      }
+  });
+});
+
+//Editar Aplicação
+app.post("/edite", urlencodeParser, function(req, res){
+  pool.query("SELECT * FROM crud_app WHERE crud_app.codigo = ?", [req.body.codigo], function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{
+      pool.query("SELECT name FROM crud_linguagem ORDER BY name", function(er, result){
+        if(er) res.sendStatus(500).send(er);
+        else{
+          var nav_bar = updateMenu(1);
+          res.render('edite-aplication', {nav_bar, linguagem: result, app: results});
+        }
+      });
+    }
+  });
+});
+
+app.post("/update-aplication", urlencodeParser, function(req, res){
+  pool.query("UPDATE crud_app SET name = ?, URL = ?, app_language = ?, description = ? WHERE crud_app.codigo = ?;", [req.body.nameapp, req.body.urlapp, req.body.linguagemapp, req.body.descricaoapp, req.body.codigo], function(err, results){
+    if(err) res.sendStatus(500).send(err);
+    else{
+      if(req.body.linguagemapp != req.body.lastlinguagemapp){
+          uplinguagem(req.body.linguagemapp);
+          downlinguagem(req.body.lastlinguagemapp);
+          res.redirect('/');
+        }
+    } 
   });
 });
 
